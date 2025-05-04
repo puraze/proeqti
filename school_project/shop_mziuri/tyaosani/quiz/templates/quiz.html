@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="quiz-container">
+        <h2 class="text-center" style="color: #000;">📝  ქვიზის დაწყება</h2>
+
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="card question-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ field.label }}</h5>
+                            <div class="radio-options-container">
+                                {% for choice in field %}
+                                    <div class="radio-option">
+                                        <span class="radio-circle">
+                                            {{ choice.tag }}
+                                        </span>
+                                        <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">ქვიზის დასრულება</button>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert alert-warning">
+                You must be logged in to take the quiz. <a href="{% url 'login' %}">Login</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .quiz-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .question-card {
+        margin-bottom: 15px;
+        border: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .radio-options-container {
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+    .radio-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .radio-circle {
+        display: inline-block;
+        width: 24px;
+        margin-right: 8px;
+    }
+    .radio-option input[type="radio"] {
+        margin: 0;
+        transform: scale(1.2);
+    }
+    .card-title {
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+    .radio-option label {
+        margin-left: 5px;
+    }
+    @media (max-width: 576px) {
+    .quiz-container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .radio-option label {
+        font-size: 0.95rem;
+    }
+
+    .btn-lg {
+        width: 100%;
+    }
+}
+</style>
+
+{% endblock %}
