@@ -12,11 +12,15 @@
           <p class="me-3 mb-0">ნახვა: {{ product.views }}</p>
         </div>
         <h5 class="card-title">{{ product.name }}</h5>
-        <p class="card-text">აღწერა: {{ product.description }}</p>
+        <p class="card-text">აღწერა: {{ product.description|linebreaks }}</p>
 
         <div class="d-flex mt-4 flex-wrap">
-          <a href="{% url 'update_product' product.id %}" class="btn btn-primary btn-sm me-2 mb-2">განახლება</a>
-          <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm mb-2">წაშლა</a>
+          {% if user.is_authenticated %} {# Check if user is logged in #}
+            {% if user.is_superuser or product.author == user %} {# Then check permissions #}
+              <a href="{% url 'update_product' product.id %}" class="btn btn-primary btn-sm me-2 mb-2">განახლება</a>
+              <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm mb-2">წაშლა</a>
+            {% endif %}
+          {% endif %}
         </div>
       </div>
     </div>
