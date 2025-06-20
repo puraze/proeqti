@@ -3,7 +3,7 @@ from .models import Question, Answer
 
 class AnswerInline(admin.TabularInline):
     model = Answer
-    extra = 3  # Allow 3 choices by default
+    extra = 3 
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
