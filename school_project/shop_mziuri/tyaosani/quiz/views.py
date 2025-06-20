@@ -32,7 +32,7 @@ def quiz_view(request):
                             'correct_answer': correct_answer.text
                         })
                 
-                else:  # For text-based answers
+                else: 
                     correct_answers = [ans.text.lower() for ans in Answer.objects.filter(question=question, is_correct=True)]
                     if user_answer.lower() in correct_answers:
                         correct_count += 1
