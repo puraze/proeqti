@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def quiz_view(request):
-    print("User logged in:", request.user.is_authenticated)  # Debugging line
+    print("User logged in:", request.user.is_authenticated)
     questions = Question.objects.all()
     incorrect_answers = []
     correct_count = 0
