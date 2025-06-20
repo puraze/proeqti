@@ -2,7 +2,7 @@ from django import forms
 from .models import Question, Answer
 
 class QuizForm(forms.Form):
-    # Dynamically generate a field for each question
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for question in Question.objects.all():
