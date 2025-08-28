@@ -1,17 +1,19 @@
 from django.shortcuts import render
 from .models import Question, Answer
 from .forms import QuizForm
-from django.contrib.auth.decorators import login_required
+from django.utils.translation import get_language
 
-@login_required
 def quiz_view(request):
-    print("User logged in:", request.user.is_authenticated)
-    questions = Question.objects.all()
+    current_language = get_language()  # e.g., 'ka', 'en', 'ru'
+    
+    # Only show questions in the current language
+    questions = Question.objects.filter(language=current_language)
+    
     incorrect_answers = []
     correct_count = 0
 
     if request.method == "POST":
-        form = QuizForm(request.POST)
+        form = QuizForm(request.POST, questions=questions)
         if form.is_valid():
             total_questions = questions.count()
             
@@ -31,8 +33,7 @@ def quiz_view(request):
                             'your_answer': selected_answer.text if selected_answer else "No answer",
                             'correct_answer': correct_answer.text
                         })
-                
-                else: 
+                else:  # text answer
                     correct_answers = [ans.text.lower() for ans in Answer.objects.filter(question=question, is_correct=True)]
                     if user_answer.lower() in correct_answers:
                         correct_count += 1
@@ -49,6 +50,6 @@ def quiz_view(request):
                 'incorrect_answers': incorrect_answers
             })
     else:
-        form = QuizForm()
+        form = QuizForm(questions=questions)
 
     return render(request, 'quiz.html', {'form': form})

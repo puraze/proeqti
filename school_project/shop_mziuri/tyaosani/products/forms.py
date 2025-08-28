@@ -3,10 +3,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Product, Category
 
+
+
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'image', 'description', 'category']
+        fields = ["name", "description", "image", "category", "language_visibility"]
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)

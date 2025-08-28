@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load i18n_extras %}
 
 {% block content %}
 <div class="container mt-4">
-  <h2 class="mb-4 text-center">📝 Share Your Thoughts</h2>
+  <h2 class="mb-4 text-center">{% trans "📝 Share Your Thoughts" %}</h2>
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+
     <div class="d-grid mt-3">
-      <button type="submit" class="btn btn-primary">შექმნა</button>
+      <button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
     </div>
   </form>
 </div>

@@ -1,76 +1,70 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-4">
+    <!-- SEARCH & FILTER FORM -->
     <div class="row mb-3">
         <div class="col-12">
             <form method="GET" action="{% url 'home' %}" class="d-flex flex-wrap align-items-center justify-content-end">
-
-                <div class="me-2 mb-2">
-                    <input type="text" name="product_name" class="form-control" placeholder="ძებნა სახელით" value="{{ request.GET.product_name|default:'' }}">
+                <div class="me-2 mb-2 flex-grow-1" style="min-width: 180px;">
+                    <input type="text" name="product_name" class="form-control" placeholder="{% trans 'Search by name' %}" value="{{ request.GET.product_name|default:'' }}">
                 </div>
-                <div class="me-2 mb-2">
+                <div class="me-2 mb-2" style="min-width: 150px;">
                     <select name="category" class="form-select">
-                        <option value="">ყველა კატეგორია</option>
+                        <option value="">{% trans "All categories" %}</option>
                         {% for cat in categories %}
                             <option value="{{ cat.id }}" {% if request.GET.category|floatformat == cat.id|floatformat %}selected{% endif %}>{{ cat.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="mb-2">
-                    <button type="submit" class="btn btn-outline-light">მოძებნა</button>
+                    <button type="submit" class="btn btn-outline-light">{% trans "Search" %}</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- PRODUCTS GRID -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
         {% for product in products %}
         <div class="col">
             <div class="card h-100 product-card">
                 {% if product.image %}
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
-                    <img src="{% static 'default_product.png' %}" class="card-img-top" alt="სურათი მალე იქნება"> 
+                    <img src="{% static 'default_product.png' %}" class="card-img-top" alt="{% trans 'Image coming soon' %}">
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">
-                        <small class="text-muted">ნახვები: {{ product.views }}</small>
+                    <p class="card-text mb-3">
+                        <small class="text-muted">{% trans "Views" %}: {{ product.views }}</small>
                     </p>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">დეტალების ნახვა</a>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary mt-auto">{% trans "View details" %}</a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12">
-            <center><p class="text-center text-muted">ვერ მოიძებნა გვერდი თქვენი კრიტერიუმებით</p></center>
+            <p class="text-center text-muted">{% trans "No results found for your criteria." %}</p>
         </div>
         {% endfor %}
     </div>
 
-
-
-
-    {% if products.has_other_pages %} 
+    <!-- PAGINATION -->
+    {% if products.has_other_pages %}
     <nav aria-label="Page navigation" class="mt-4">
         <ul class="pagination justify-content-center">
             {% if products.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ products.previous_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">წინა</a> {# Translated "Previous" #}
+                    <a class="page-link" href="?page={{ products.previous_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">{% trans "Previous" %}</a>
                 </li>
             {% else %}
-                <li class="page-item disabled">
-                    <span class="page-link">წინა</span>
-                </li>
+                <li class="page-item disabled"><span class="page-link">{% trans "Previous" %}</span></li>
             {% endif %}
 
             {% for i in products.paginator.page_range %}
-
-
-
                 {% if products.number == i %}
                     <li class="page-item active" aria-current="page"><span class="page-link">{{ i }}</span></li>
                 {% else %}
@@ -80,23 +74,58 @@
                 {% endif %}
             {% endfor %}
 
-            {# Next button #}
-
             {% if products.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ products.next_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">შემდეგი</a>
+                    <a class="page-link" href="?page={{ products.next_page_number }}{% if request.GET.product_name %}&product_name={{ request.GET.product_name }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">{% trans "Next" %}</a>
                 </li>
             {% else %}
-                <li class="page-item disabled">
-                    
-                    <span class="page-link">შემდეგი</span>
-
-
-                </li>
+                <li class="page-item disabled"><span class="page-link">{% trans "Next" %}</span></li>
             {% endif %}
         </ul>
     </nav>
     {% endif %}
+<style>
+/* Dark mode select */
+body.dark-mode select.form-select {
+    background-color: #2c2c2c; /* dark background */
+    color: #f1f1f1;            /* light text */
+    border-color: #555;         /* subtle border for contrast */
+}
+
+/* Hover / focus styles */
+body.dark-mode select.form-select:focus {
+    background-color: #3a3a3a;
+    color: #fff;
+    border-color: #888;
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.25);
+}
+
+/* Options (works in most modern browsers) */
+body.dark-mode select.form-select option {
+    background-color: #2c2c2c;
+    color: #f1f1f1;
+}
+/* Inputs & selects */
+.form-control,
+.form-select {
+    transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    border-color: #0d6efd;
+}
+.pagination .page-link {
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination .page-link:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+</style>
 
 </div>
 {% endblock %}

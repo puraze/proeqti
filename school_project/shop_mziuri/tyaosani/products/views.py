@@ -5,73 +5,69 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.translation import get_language
 
 PROTECTED_CATEGORY_NAMES = ['ვეფხისტყაოსანი', 'პერსონაჟები']
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import models
+from django.utils.translation import get_language
+from django.http import Http404
+
+from .models import Product, Category
+from .forms import ProductForm
+from django.http import HttpResponseForbidden
+
 def home(request):
+    language = get_language()  # current selected language ('ka', 'en', 'ru', etc.)
+    
+    products = Product.objects.filter(language_visibility=language).order_by('-id')
+    categories = Category.objects.all()
+    
+    # Search filter
     product_name = request.GET.get('product_name')
     category_id = request.GET.get('category')
-
-    filters = {}
-
+    
     if product_name:
-        filters['name__icontains'] = product_name
+        products = products.filter(name__icontains=product_name)
     if category_id:
-        filters['category'] = category_id
+        products = products.filter(category__id=category_id)
+    
+    # Pagination
+    paginator = Paginator(products, 9)
+    page_number = request.GET.get('page')
+    products_page = paginator.get_page(page_number)
+    
+    context = {
+        'products': products_page,
+        'categories': categories,
+    }
+    return render(request, 'home.html', context)
 
-
-    products_list = Product.objects.filter(**filters).order_by('-views') 
-
-    paginator = Paginator(products_list, 12) 
-    page = request.GET.get('page') 
-
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-
-        products = paginator.page(paginator.num_pages)
-
-
-    categories = Category.objects.all()
-
-    return render(request, 'home.html', {
-        'products': products, 
-        'categories': categories
-    })
-
-
-def product_detail(request, id):
-    product = get_object_or_404(Product, id=id)
-
-    product.views += 1
-    product.save()
-
-    return render(request, 'product_detail.html', {'product': product})
 
 @login_required
 def create_product(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES, user=request.user)
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
-
-            if product.category and product.category.name in PROTECTED_CATEGORY_NAMES:
-                if not request.user.is_superuser:
-                    messages.error(request, 'You cannot create products under this category.')
-                    return redirect('home')
-
-            product.author = request.user
-
+            product.user = request.user
             product.save()
-            messages.success(request, 'Product has been created successfully.')
-            return redirect('home')
+            return redirect("product_detail", pk=product.pk)
     else:
-        form = ProductForm(user=request.user)
+        form = ProductForm()
+    return render(request, "product_form.html", {"form": form})
 
-    return render(request, 'product_form.html', {'form': form})
 
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    # Remove the "language" check
+    product.views = (product.views or 0) + 1
+    product.save(update_fields=['views'])
+
+    return render(request, 'product_detail.html', {'product': product})
 
 @login_required
 def update_product(request, id):

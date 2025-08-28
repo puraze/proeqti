@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-5 text-center">
+  <div class="card mx-auto shadow-lg rounded-4" style="max-width:720px;">
+    <div class="card-body p-4">
+      <h1 class="display-6">❌ {% trans "Not Available" %}</h1>
+      <p class="lead">
+        {% trans "This content is not available in your selected language." %}
+      </p>
+      <div class="mt-3">
+        <a href="{% url 'home' %}" class="btn btn-primary">{% trans "Go back home" %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

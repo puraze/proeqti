@@ -1,0 +1,207 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-29 03:41+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: .\products\templates\base.html:8 .\products\templates\base.html:295
+msgid "Vefkhistkaosani"
+msgstr "ვეფხისტყაოსანი"
+
+#: .\products\templates\base.html:298
+msgid "Toggle navigation"
+msgstr ""
+
+#: .\products\templates\base.html:304 .\products\templates\base.html:434
+msgid "Home"
+msgstr "მთავარი გვერდი"
+
+#: .\products\templates\base.html:307 .\products\templates\base.html:438
+msgid "Quiz"
+msgstr "ქვიზი"
+
+#: .\products\templates\base.html:311
+msgid "Share Your Thoughts"
+msgstr "აზრის გაზიარება"
+
+#: .\products\templates\base.html:318 .\products\templates\base.html:320
+msgid "Language"
+msgstr ""
+
+#: .\products\templates\base.html:361
+msgid "Logout"
+msgstr "გასვლა"
+
+#: .\products\templates\base.html:365 .\products\templates\base.html:405
+msgid "Register"
+msgstr "რეგისტრაცია"
+
+#: .\products\templates\base.html:368 .\products\templates\base.html:404
+#: .\quiz\templates\quiz.html:38 .\quiz\templates\quiz.html:59
+msgid "Login"
+msgstr "შესვლა"
+
+#: .\products\templates\base.html:389
+msgid "All rights reserved."
+msgstr "ყველა უფლება დაცულია."
+
+#: .\products\templates\base.html:390
+msgid "All code and design are protected by the author."
+msgstr "ყველა კოდი და დიზაინი დაცულია ავტორის მიერ."
+
+#: .\products\templates\base.html:391
+msgid "Unauthorized copying or redistribution is prohibited."
+msgstr "უნებართვო კოპირება ან ხელახალი გავრცელება აკრძალულია."
+
+#: .\products\templates\base.html:398 .\quiz\templates\quiz.html:52
+msgid "Access Denied"
+msgstr "წვდომა აკრძალულია"
+
+#: .\products\templates\base.html:399 .\products\templates\base.html:403
+msgid "Close"
+msgstr "დახურვა"
+
+#: .\products\templates\base.html:401
+msgid ""
+"You are not registered or logged into your account. Please log in or "
+"register."
+msgstr ""
+"თქვენ არ ხართ რეგისტრირებული ან შესული თქვენს ანგარიშში. გთხოვთ შედით "
+"აქაუნთში ან დარეგისტრირდით"
+
+#: .\products\templates\home.html:12
+msgid "Search by name"
+msgstr "ძებნა"
+
+#: .\products\templates\home.html:16
+msgid "All categories"
+msgstr "ყველა კატეგორია"
+
+#: .\products\templates\home.html:23
+msgid "Search"
+msgstr "ძებნა"
+
+#: .\products\templates\home.html:37
+msgid "Image coming soon"
+msgstr "Image coming soon"
+
+#: .\products\templates\home.html:42
+#: .\products\templates\product_detail.html:18
+msgid "Views"
+msgstr "ნახვები"
+
+#: .\products\templates\home.html:44
+msgid "View details"
+msgstr "ნახვა"
+
+#: .\products\templates\home.html:50
+msgid "No results found for your criteria."
+msgstr "სამწუხაროდ თქვენი კრიტერიუმებით შედეგები ვერ მოიძებნა"
+
+#: .\products\templates\home.html:61 .\products\templates\home.html:64
+msgid "Previous"
+msgstr "წინა"
+
+#: .\products\templates\home.html:79 .\products\templates\home.html:82
+msgid "Next"
+msgstr "შემდეგი"
+
+#: .\products\templates\not_allowed.html:7
+msgid "Not Available"
+msgstr ""
+
+#: .\products\templates\not_allowed.html:9
+msgid "This content is not available in your selected language."
+msgstr ""
+
+#: .\products\templates\not_allowed.html:12
+msgid "Go back home"
+msgstr ""
+
+#: .\products\templates\product_detail.html:21
+msgid "Description"
+msgstr ""
+
+#: .\products\templates\product_detail.html:26
+msgid "Update"
+msgstr ""
+
+#: .\products\templates\product_detail.html:27
+msgid "Delete"
+msgstr ""
+
+#: .\products\templates\product_form.html:7
+#, fuzzy
+#| msgid "Share Your Thoughts"
+msgid "📝 Share Your Thoughts"
+msgstr "აზრის გაზიარება"
+
+#: .\products\templates\product_form.html:14
+msgid "Create"
+msgstr "შექმნა"
+
+#: .\quiz\templates\quiz.html:7
+msgid "Start Quiz"
+msgstr ""
+
+#: .\quiz\templates\quiz.html:32 .\quiz\templates\quiz.html:41
+msgid "Finish Quiz"
+msgstr ""
+
+#: .\quiz\templates\quiz.html:37 .\quiz\templates\quiz.html:56
+msgid "You must be logged in to take the quiz."
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:7
+msgid "Quiz Result"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:77
+msgid "You have completed the quiz!"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:80
+#, python-format
+msgid "Your score is: %(score)s/%(total)s"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:84
+msgid "Incorrect Answers:"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:88
+msgid "Question:"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:89
+msgid "Your Answer:"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:90
+msgid "Correct Answer:"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:95
+msgid "Perfect score! Congratulations!"
+msgstr ""
+
+#: .\quiz\templates\quiz_result.html:99
+msgid "Go Back"
+msgstr ""
+
+#~ msgid "This is a test message."
+#~ msgstr "ეს არის ტესტური მესიჯი"

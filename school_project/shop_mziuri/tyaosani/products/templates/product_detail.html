@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
 
 {% block content %}
 <div class="card mb-3 mt-4">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="Product Image">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="Product Image">
+      {% else %}
+        <img src="{% static 'default_product.png' %}" class="img-fluid rounded-start" alt="Product Image">
+      {% endif %}
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <div class="d-flex flex-wrap align-items-center mb-2">
-          <p class="me-3 mb-0">ნახვა: {{ product.views }}</p>
+          <p class="me-3 mb-0">{% trans "Views" %}: {{ product.views }}</p>
         </div>
         <h5 class="card-title">{{ product.name }}</h5>
-        <p class="card-text">აღწერა: {{ product.description|linebreaks }}</p>
+        <p class="card-text">{% trans "Description" %}: {{ product.description|linebreaks }}</p>
 
         <div class="d-flex mt-4 flex-wrap">
-          {% if user.is_authenticated %} {# Check if user is logged in #}
-            {% if user.is_superuser or product.author == user %} {# Then check permissions #}
-              <a href="{% url 'update_product' product.id %}" class="btn btn-primary btn-sm me-2 mb-2">განახლება</a>
-              <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm mb-2">წაშლა</a>
+          {% if user.is_authenticated %}
+            {% if user.is_superuser or product.author == user %}
+              <a href="{% url 'update_product' product.id %}" class="btn btn-primary btn-sm me-2 mb-2">{% trans "Update" %}</a>
+              <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm mb-2">{% trans "Delete" %}</a>
             {% endif %}
           {% endif %}
         </div>
@@ -32,11 +38,9 @@
     .card-title {
       font-size: 1.2rem;
     }
-
     .card-text {
       font-size: 1rem;
     }
-
     .btn-sm {
       font-size: 0.9rem;
       padding: 6px 12px;

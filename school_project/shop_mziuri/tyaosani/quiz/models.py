@@ -5,12 +5,20 @@ class Question(models.Model):
         ('choice', 'Multiple Choice'),
         ('text', 'Text Answer'),
     ]
+
+    LANGUAGE_CHOICES = [
+        ('ka', 'Georgian'),
+        ('en', 'English'),
+        ('ru', 'Russian'),
+    ]
     
     text = models.CharField(max_length=255)
     question_type = models.CharField(max_length=10, choices=QUESTION_TYPES)
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 
     def __str__(self):
-        return self.text
+        return f"[{self.language}] {self.text}"
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
